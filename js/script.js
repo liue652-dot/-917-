@@ -7,7 +7,7 @@
    3.  Intro
    4.  Menu numbers + page switching
    5.  Page 2: flyer tabs
-   6.  Page 7: collage + comments
+   6.  Page 7: collage + comments (shared database)
    7.  Page 2: comment dots
    8.  Page 2: flyer map
    9.  Page 2: dialer
@@ -785,11 +785,13 @@ $$("#p7 .drag-img").forEach(makeDraggable);
 
 let db = null;
 
-let isOwner = false;
+let auth = null;
 
 let dbReady = false;
 
 let shared = [];
+
+let sharedPhotos = [];
 
 const LOCAL_MESSAGES_KEY = "studio-messages";
 
@@ -831,7 +833,8 @@ function allMsgs() {
 }
 
 
-/* SUBMIT COMMENT */
+/* SUBMIT COMMENT
+   Saved to the shared database, so every visitor sees it. */
 
 $("#messageSend").onclick = async () => {
 
@@ -852,6 +855,8 @@ $("#messageSend").onclick = async () => {
 
     } catch (e) {
 
+      console.error(e);
+
       messageInput.placeholder = "couldn't save your message";
 
       return;
@@ -859,6 +864,8 @@ $("#messageSend").onclick = async () => {
     }
 
   } else {
+
+    /* no database configured (local testing only) */
 
     const messages = getLocalMessages();
 
@@ -877,47 +884,6 @@ $("#messageSend").onclick = async () => {
     renderMessageDots();
 
   }
-
-  messageInput.value = "";
-
-};
-
-
-$("#messageReset").onclick = async () => {
-
-  if (!confirm("Reset all messages?")) {
-    return;
-  }
-
-  if (dbReady) {
-
-    try {
-
-      const snap = await db.collection("messages").get();
-
-      const batch = db.batch();
-
-      snap.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
-
-      await batch.commit();
-
-    } catch (e) {
-
-      console.error("Could not reset messages:", e);
-
-      return;
-
-    }
-
-  }
-
-  try {
-    localStorage.removeItem("studio-messages");
-  } catch (e) {}
-
-  renderMessageDots();
 
   messageInput.value = "";
 
@@ -1021,89 +987,210 @@ function renderMessageDots() {
 renderMessageDots();
 
 
-/* DATABASE */
+/* ==========================================================
+   SHARED DATABASE (Firebase / Firestore)
+   Everyone can READ and ADD comments and photos.
+   Only the owner can DELETE, and only after signing in from the
+   browser console (see the admin functions below). The rules that
+   enforce this live in firestore.rules, not here.
+   ========================================================== */
 
-(async () => {
+(function initBackend() {
 
   try {
 
-    if (typeof claude === "undefined") {
+    const cfg = window.FIREBASE_CONFIG;
+
+    if (
+      typeof firebase === "undefined" ||
+      !cfg ||
+      !cfg.projectId ||
+      String(cfg.projectId).startsWith("YOUR_")
+    ) {
+      console.warn("Firebase is not configured: comments and photos stay on this device only.");
       return;
     }
 
-    const [d, u] = await Promise.all([
-      claude.use("db"),
-      claude.use("user"),
-    ]);
+    firebase.initializeApp(cfg);
 
-    if (!d || !u) {
-      return;
-    }
+    db = firebase.firestore();
 
-    db = d;
-
-    isOwner = u.isOwner();
+    auth = firebase.auth();
 
     dbReady = true;
 
-    db.collection("messages").onSnapshot(
 
-      (s) => {
+    /* COMMENTS (newest 150, shown oldest first) */
 
-        shared = s.docs
-          .map((x) => ({
-            id: x.id,
-            text: String((x.data() || {}).text || ""),
-            ts: Number((x.data() || {}).ts || 0),
-          }))
-          .filter((m) => m.text.trim());
+    db.collection("messages")
+      .orderBy("ts", "desc")
+      .limit(150)
+      .onSnapshot(
+        (s) => {
 
-        shared.sort((a, b) => a.ts - b.ts);
+          shared = s.docs
+            .map((x) => ({
+              id: x.id,
+              text: String((x.data() || {}).text || ""),
+              ts: Number((x.data() || {}).ts || 0),
+            }))
+            .filter((m) => m.text.trim())
+            .reverse();
 
-        renderMessageDots();
+          renderMessageDots();
 
-      },
+        },
+        (err) => console.error("messages listener:", err)
+      );
 
-      () => {}
 
-    );
+    /* PHOTOS (newest 20, shown oldest first) */
 
-  } catch (e) {}
+    db.collection("photos")
+      .orderBy("ts", "desc")
+      .limit(20)
+      .onSnapshot(
+        (s) => {
+
+          sharedPhotos = s.docs
+            .map((x) => ({
+              id: x.id,
+              photo: String((x.data() || {}).photo || ""),
+              message: String((x.data() || {}).message || ""),
+              ts: Number((x.data() || {}).ts || 0),
+            }))
+            .filter((p) => p.photo)
+            .reverse();
+
+          const archive = $("#p9archive");
+          const grid = $("#archiveGrid");
+
+          /* redraw only when the archive is open and nobody is hovering one */
+
+          if (
+            archive &&
+            archive.classList.contains("on") &&
+            grid &&
+            !grid.classList.contains("focus")
+          ) {
+            initArchivePage();
+          }
+
+        },
+        (err) => console.error("photos listener:", err)
+      );
+
+  } catch (e) {
+
+    console.error("Could not start the shared database:", e);
+
+  }
 
 })();
 
 
-/* SHIFT + C
-   DELETE ALL COMMENTS */
+/* ----------------------------------------------------------
+   OWNER-ONLY ADMIN (browser console)
+   There are no buttons on the site for this.
 
-addEventListener("keydown", async (e) => {
+     await adminSignIn("you@example.com", "your password")
+     await adminResetComments()
+     await adminResetPhotos()
+     await adminSignOut()
 
-  if (
-    e.target.tagName === "TEXTAREA" ||
-    !e.shiftKey ||
-    e.ctrlKey ||
-    e.metaKey ||
-    e.altKey ||
-    e.key.toUpperCase() !== "C" ||
-    !isOwner ||
-    !dbReady
-  ) {
+   Anyone could type these names in their own console, but the
+   database rules refuse every delete unless the signed-in
+   account is the owner, so for everyone else they do nothing.
+   ---------------------------------------------------------- */
+
+async function adminDeleteAll(collectionName) {
+
+  if (!dbReady) {
+    console.warn("No shared database configured.");
+    return 0;
+  }
+
+  if (!auth.currentUser) {
+    console.warn("Sign in first: await adminSignIn(email, password)");
+    return 0;
+  }
+
+  let total = 0;
+
+  for (;;) {
+
+    const snap = await db.collection(collectionName).limit(400).get();
+
+    if (snap.empty) {
+      break;
+    }
+
+    const batch = db.batch();
+
+    snap.forEach((d) => batch.delete(d.ref));
+
+    await batch.commit();
+
+    total += snap.size;
+
+  }
+
+  console.log("Deleted " + total + " from " + collectionName + ".");
+
+  return total;
+
+}
+
+window.adminSignIn = async (email, password) => {
+
+  if (!auth) {
+    console.warn("No shared database configured.");
     return;
   }
 
-  if (!confirm("Delete all comments?")) {
+  const cred = await auth.signInWithEmailAndPassword(email, password);
+
+  console.log("Signed in as the owner account. uid:", cred.user.uid);
+
+};
+
+window.adminSignOut = async () => {
+
+  if (auth) {
+    await auth.signOut();
+  }
+
+  console.log("Signed out.");
+
+};
+
+window.adminResetComments = async () => {
+
+  if (!confirm("Delete ALL comments for everyone?")) {
     return;
   }
 
-  for (const m of shared) {
+  await adminDeleteAll("messages");
 
-    try {
-      await db.collection("messages").doc(m.id).delete();
-    } catch (_) {}
+  shared = [];
 
+  renderMessageDots();
+
+};
+
+window.adminResetPhotos = async () => {
+
+  if (!confirm("Delete ALL photos for everyone?")) {
+    return;
   }
 
-});
+  await adminDeleteAll("photos");
+
+  sharedPhotos = [];
+
+  initArchivePage();
+
+};
 
 
 /* SHIFT + R
@@ -1760,9 +1847,14 @@ const ARCHIVE_SQUARES = 20;
 let cameraStream = null;
 
 
-/* PHOTO STORAGE */
+/* PHOTO STORAGE
+   Shared database when configured, otherwise this device only. */
 
 function getPhotoArchive() {
+
+  if (dbReady) {
+    return sharedPhotos;
+  }
 
   try {
 
@@ -1784,30 +1876,6 @@ function getPhotoArchive() {
 
   } catch (e) {}
 
-
-  try {
-
-    const oldPhoto = localStorage.getItem(OLD_PHOTO_KEY);
-
-    if (oldPhoto) {
-
-      const migrated = [
-        {
-          id: "migrated-" + Date.now(),
-          photo: oldPhoto,
-          message: "",
-        },
-      ];
-
-      localStorage.setItem(PHOTO_KEY, JSON.stringify(migrated));
-
-      return migrated;
-
-    }
-
-  } catch (e) {}
-
-
   return [];
 
 }
@@ -1828,61 +1896,11 @@ function savePhotoArchive(photos) {
 }
 
 
-/* RESET PHOTOS */
-
-function resetPhotoArchive() {
-
-  if (!confirm("RESET ALL SUBMITTED PHOTOS?")) {
-    return;
-  }
-
-  try {
-
-    localStorage.removeItem(PHOTO_KEY);
-
-    localStorage.removeItem(OLD_PHOTO_KEY);
-
-  } catch (e) {
-
-    console.error("Could not reset photos.", e);
-
-  }
-
-  const preview = $("#capturePreview");
-
-  if (preview) {
-    preview.removeAttribute("src");
-    preview.classList.remove("has-photo");
-  }
-
-  const status = $("#cameraStatus");
-
-  if (status) {
-    status.textContent = "CAMERA OFF";
-  }
-
-  const message = $("#photoMessage");
-
-  if (message) {
-    message.value = "";
-  }
-
-  initArchivePage();
-
-}
-
-const photoReset = $("#photoReset");
-
-if (photoReset) {
-
-  photoReset.onclick = () => {
-    resetPhotoArchive();
-  };
-
-}
-
-
 /* CAMERA PAGE */
+
+/* the photo this visitor took in this session (shown as the preview) */
+
+let myLastPhoto = null;
 
 function initCameraPage() {
 
@@ -1896,13 +1914,9 @@ function initCameraPage() {
     return;
   }
 
-  const photos = getPhotoArchive();
+  if (myLastPhoto) {
 
-  const latest = photos.length ? photos[photos.length - 1] : null;
-
-  if (latest) {
-
-    preview.src = latest.photo;
+    preview.src = myLastPhoto;
 
     preview.classList.add("has-photo");
 
@@ -1914,7 +1928,7 @@ function initCameraPage() {
 
     preview.classList.remove("has-photo");
 
-    status.textContent = "CAMERA OFF";
+    status.textContent = cameraStream ? "CAMERA ON" : "CAMERA OFF";
 
   }
 
@@ -1963,7 +1977,7 @@ async function startCamera() {
 
 /* TAKE PHOTO */
 
-function capturePhoto() {
+async function capturePhoto() {
 
   const video = $("#captureVideo");
 
@@ -1985,7 +1999,9 @@ function capturePhoto() {
 
   }
 
-  const maxWidth = 1400;
+  /* kept small so each photo fits comfortably in one database document */
+
+  const maxWidth = 900;
 
   const scale = Math.min(1, maxWidth / video.videoWidth);
 
@@ -2011,22 +2027,51 @@ function capturePhoto() {
 
   ctx.restore();
 
-  const photo = canvas.toDataURL("image/jpeg", 0.88);
+  const photo = canvas.toDataURL("image/jpeg", 0.7);
 
   const text = message ? message.value.trim().slice(0, 240) : "";
 
-  const photos = getPhotoArchive();
+  if (dbReady) {
 
-  photos.push({
-    id:
-      Date.now().toString(36) +
-      "-" +
-      Math.random().toString(36).slice(2),
-    photo: photo,
-    message: text,
-  });
+    try {
 
-  savePhotoArchive(photos);
+      status.textContent = "SAVING…";
+
+      await db.collection("photos").add({
+        photo: photo,
+        message: text,
+        ts: Date.now(),
+      });
+
+    } catch (e) {
+
+      console.error(e);
+
+      status.textContent = "COULD NOT SAVE";
+
+      return;
+
+    }
+
+  } else {
+
+    const photos = getPhotoArchive();
+
+    photos.push({
+      id:
+        Date.now().toString(36) +
+        "-" +
+        Math.random().toString(36).slice(2),
+      photo: photo,
+      message: text,
+      ts: Date.now(),
+    });
+
+    savePhotoArchive(photos);
+
+  }
+
+  myLastPhoto = photo;
 
   preview.src = photo;
 

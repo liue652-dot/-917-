@@ -1499,7 +1499,7 @@ body:has(.page.on .poem) .num.on {
 }
 
 
-/*  17. "+" COLOUR, RESET BUTTONS */
+/*  17. "+" COLOUR */
 
 #plus {
   color: #111 !important;
@@ -1509,50 +1509,6 @@ body:has(#p2.on) #plus,
 body:has(#p7.on) #plus,
 body:has(#p7camera.on) #plus {
   color: var(--pink) !important;
-}
-
-#messageReset {
-  border: 0;
-  background: transparent;
-  color: var(--blue);
-  font-family: inherit;
-  font-size: 12px;
-  letter-spacing: .08em;
-  cursor: pointer;
-  padding: 4px 0;
-  text-align: left;
-}
-
-#messageReset:hover {
-  text-decoration: underline;
-}
-
-#photoReset {
-  position: absolute;
-  right: 7vw;
-  top: max(24px, calc(env(safe-area-inset-top, 0px) + 24px));
-  z-index: 5;
-  padding: 6px 12px;
-  border: 1px solid currentColor;
-  background: transparent;
-  color: var(--green);
-  font-family: inherit;
-  letter-spacing: .08em;
-  cursor: pointer;
-  transition: background .15s, color .15s;
-}
-
-#photoReset:hover,
-#photoReset:focus-visible {
-  background: var(--green);
-  color: #fff;
-  outline: none;
-}
-
-@media (max-width: 700px) {
-  #photoReset {
-    right: 5vw;
-  }
 }
 
 body.snap,

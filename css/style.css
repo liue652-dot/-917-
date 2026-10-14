@@ -1,0 +1,1692 @@
+/* 1. ROOT + GLOBAL */
+
+:root {
+  --font: "neue-haas-grotesk-text", sans-serif;
+  --font-display: "neue-haas-grotesk-display", sans-serif;
+
+  --type: 14px;
+
+  --bg: #fff;
+  --fg: #111;
+
+  --red: #e0261c;
+  --pink: #f3c9cf;
+  --blue: var(--pink);
+
+  --green: #213832;
+  --mint: #c5dfbc;
+  --brown: #22110c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #fff;
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-weight: 400;
+  transition: background .9s, color .9s;
+  cursor: none !important;
+}
+
+html body,
+html body *:not(#grid) {
+  font-size: var(--type) !important;
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+body[data-p="1"],
+body[data-p="2"],
+body[data-p="9"] {
+  --bg: #fff;
+  --fg: var(--green);
+}
+
+body[data-p="7"] {
+  --bg: var(--green);
+  --fg: var(--pink);
+}
+
+
+/* 2. GLOBAL NAVIGATION */
+
+#plus {
+  position: fixed;
+  left: 18px;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  z-index: 100;
+  padding: 4px 10px;
+  margin: -6px 0 0 -10px;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  line-height: 1;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+html body #plus {
+  font-size: 20px !important;
+  line-height: 1;
+  padding: 4px 10px;
+}
+
+#plus:focus-visible,
+.num:focus-visible,
+.flyer-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+section {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .8s;
+}
+
+.page.on {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body[data-v="intro"] #intro,
+body[data-v="page"] .page.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* 3. INTRO */
+
+#row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 2vw;
+  transform: translateY(-50%);
+  z-index: 50;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.p1 {
+  position: relative;
+  z-index: 51;
+  padding: 10px 8px;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: font-weight .9s, font-style .9s, opacity .9s;
+}
+
+.p1.anchor {
+  font-style: italic;
+}
+
+.p1.drift {
+  pointer-events: none;
+}
+
+#hint {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: min(520px, 84vw);
+  transform: translateX(-50%);
+  text-align: center;
+  text-wrap: balance;
+  opacity: 0;
+  transition: opacity .6s;
+  pointer-events: none;
+}
+
+body.hov #hint,
+body.show-intro #hint {
+  opacity: 1;
+}
+
+#grid {
+  position: absolute;
+  left: 12vw;
+  bottom: 12vh;
+  width: 150px;
+  font-size: 7px;
+  line-height: 1.3;
+  opacity: .7;
+  word-break: break-all;
+}
+
+
+/* 4. MENU NUMBERS */
+
+#nums {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .8s;
+}
+
+body[data-v="intro"] #nums {
+  display: none;
+}
+
+body:not([data-v="intro"]) #nums {
+  opacity: 1;
+}
+
+.num {
+  position: absolute;
+  z-index: 31;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+
+.num.red:hover {
+  color: var(--red);
+}
+
+.num.blue:hover,
+.num.glow:hover {
+  color: var(--blue);
+}
+
+.num.glow:hover {
+  text-shadow: 0 0 14px var(--blue), 0 0 30px var(--blue);
+}
+
+.num.fade:hover {
+  color: var(--red);
+  animation: fb 2.6s;
+}
+
+@keyframes fb {
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+body[data-v="page"] .num:not(.on) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body[data-v="page"] .num.chain-next {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  color: var(--red) !important;
+  z-index: 20;
+}
+
+.num.on {
+  color: var(--fg) !important;
+  text-shadow: none !important;
+  animation: none;
+}
+
+body[data-v="menu"] .num.red:hover {
+  color: var(--red) !important;
+}
+
+body[data-v="menu"] .num:not(.red):hover {
+  color: var(--green) !important;
+}
+
+#walk {
+  position: fixed;
+  width: 130px;
+  height: 78px;
+  z-index: 35;
+  background: var(--green);
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+
+#walk.show {
+  opacity: .85;
+}
+
+#hoverbox {
+  position: fixed;
+  width: 130px;
+  height: 78px;
+  z-index: 35;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+
+#hoverbox.show {
+  opacity: 1;
+}
+
+
+#hoverimg {
+  position: fixed;
+  width: 150px;
+  height: auto;
+  z-index: 35;
+  filter: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+
+#hoverimg.bw {
+  filter: grayscale(1);
+}
+
+#hoverimg.show {
+  opacity: 1;
+}
+
+
+#hover9 {
+  position: fixed;
+  width: 200px;
+  height: 120px;
+  z-index: 35;
+  background: #000;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+
+#hover9.show {
+  opacity: .9;
+}
+
+
+/* 5. SHARED PAGE ELEMENTS */
+
+.page .txt {
+  display: none;
+}
+
+.page .poem {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: min(520px, 84vw);
+  margin: 12px 0 80px 58px;
+  max-height: none;
+  overflow: visible;
+  white-space: pre-wrap;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .9s;
+}
+
+body.s1 .page.on .poem,
+body[data-p="1"] .page.on .poem {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fill {
+  position: absolute;
+  right: 6vw;
+  top: 16vh;
+  width: min(27vw, 340px);
+  filter: grayscale(1);
+  transition: opacity .9s;
+}
+
+body[data-p1variant="1"] .fill {
+  left: 7vw;
+  right: auto;
+  top: 30vh;
+  width: min(27vw, 340px);
+}
+
+body[data-p1variant="2"] .fill {
+  right: 10vw;
+  top: 48vh;
+  width: min(27vw, 340px);
+}
+
+body[data-p1variant="3"] .fill {
+  left: 42vw;
+  right: auto;
+  top: 12vh;
+  width: min(27vw, 340px);
+}
+
+body.s1 .fill {
+  opacity: 0;
+}
+
+
+/* 6. PAGE 9 — VIDEO */
+
+#bg9 {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+#bg9 video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  mix-blend-mode: multiply;
+  transition: filter 1.4s, opacity 1.4s;
+}
+
+body[data-p="9"].s1 #bg9 video {
+  filter: sepia(1) saturate(.8) brightness(.45);
+  opacity: .18;
+}
+
+
+/* 7. PAGE 7 — MESSAGE + COLLAGE */
+
+#p7 {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+#p7 .collage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#p7 .drag-img {
+  position: absolute;
+  width: clamp(190px, 27vw, 340px);
+  max-width: 48vw;
+  cursor: grab;
+  pointer-events: auto;
+  user-select: none;
+  touch-action: none;
+  filter: grayscale(1) drop-shadow(0 8px 20px rgba(0, 0, 0, .18));
+}
+
+#p7 .message-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10vw;
+  pointer-events: none;
+}
+
+#p7 .message-box {
+  position: relative;
+  z-index: 21;
+  width: min(520px, 72vw);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--blue);
+  pointer-events: auto;
+}
+
+#p7 .message-box textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  outline: none;
+  background: transparent;
+  color: var(--blue);
+  font: inherit;
+  resize: none;
+}
+
+#p7 .message-box textarea::placeholder {
+  color: var(--blue);
+  opacity: .55;
+}
+
+#p7 .message-box button {
+  align-self: flex-start;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  background: none;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+#p7 .saved-note {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: min(560px, 72vw);
+  transform: translate(-50%, -50%);
+  color: var(--blue);
+  white-space: pre-wrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#p7.message-saved .message-box {
+  opacity: 0;
+}
+
+#p7.message-saved .saved-note {
+  opacity: 1;
+}
+
+
+/* 8. PAGE 2 — MESSAGE DOTS */
+
+#p2 {
+  background: var(--green);
+  overflow: hidden;
+  z-index: 2;
+}
+
+#p2 .message-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+#p2 .message-dot::before {
+  content: "";
+  position: absolute;
+  inset: -44px;
+  border-radius: 50%;
+}
+
+#p2 .message-dot.active {
+  transform: scale(1.1);
+}
+
+#p2 .message-dot.dim {
+  opacity: .08;
+}
+
+#p2 .dot-message {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  width: max-content;
+  max-width: min(420px, 48vw);
+  transform: translateY(-50%);
+  color: var(--blue);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  white-space: pre-wrap;
+}
+
+#p2 .message-dot.show .dot-message {
+  opacity: 1;
+}
+
+/* 9. PAGE 2 — FLYER TABS */
+
+#p2tabs {
+  overflow: hidden;
+  background: var(--blue);
+  color: var(--brown);
+}
+
+#p2tabs .tabs-title {
+  position: absolute;
+  left: 6vw;
+  top: 10vh;
+  font-weight: 400;
+}
+
+#p2tabs .tab-note {
+  position: absolute;
+  right: 6vw;
+  top: 10vh;
+  width: min(300px, 30vw);
+}
+
+#p2tabs .tabs-field {
+  position: absolute;
+  left: 8vw;
+  right: 8vw;
+  top: 42vh;
+  height: 34vh;
+  display: flex;
+  justify-content: center;
+  gap: 1.2vw;
+}
+
+#p2tabs .tabs-field::before {
+  content: "";
+  position: absolute;
+  left: -2vw;
+  right: -2vw;
+  top: -16vh;
+  height: 16vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-bottom: 1px dashed currentColor;
+}
+
+
+#p2tabs .tabs-field::after {
+  content: "917 · Help Needed";
+  position: absolute;
+  left: 50%;
+  top: -16vh;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  padding: 0 12px;
+  background: var(--blue);
+  white-space: nowrap;
+}
+
+#p2tabs .flyer-tab {
+  position: relative;
+  flex: 1;
+  min-width: 42px;
+  max-width: 150px;
+  height: 100%;
+  padding-top: 1.4em;
+  border: 1px solid currentColor;
+  border-top: 0;
+  background: var(--blue);
+  color: inherit;
+  writing-mode: vertical-rl;
+  cursor: pointer;
+  transform-origin: 50% 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#p2tabs .flyer-tab.falling {
+  pointer-events: none;
+  animation: tabfall 1.6s cubic-bezier(.45, 0, .9, .5) forwards;
+}
+
+#p2tabs .flyer-tab.gone {
+  visibility: hidden;
+}
+
+
+#p2tabs .cities {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--blue);
+  color: var(--brown);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+#p2tabs .cities.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#p2tabs .city {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  align-items: center;
+  min-height: 50vh;
+  padding: 7vh 0;
+}
+
+/* first spread clears the + button */
+#p2tabs .city:first-child {
+  padding-top: 16vh;
+}
+
+#p2tabs .city-label {
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+#p2tabs .city-text {
+  max-width: 90ch;
+  margin: 0 auto;
+  padding: 0 5vw 0 3vw;
+  text-align: left;
+}
+
+#p2tabs .city-text p {
+  margin: 0 0 1em;
+}
+
+#p2tabs .city-text p:last-child {
+  margin-bottom: 0;
+}
+
+#p2tabs .cities-again {
+  display: block;
+  margin: 0 auto;
+  padding: 12vh 12px 14vh;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-style: italic;
+}
+
+#p2tabs .cities-again:hover,
+#p2tabs .cities-again:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+@media (max-width: 700px) {
+
+  #p2tabs .city {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 20px;
+    min-height: 0;
+    padding: 6vh 0;
+  }
+
+  #p2tabs .city-text {
+    padding: 0 8vw;
+  }
+}
+
+@keyframes tabfall {
+  0% {
+    transform: rotate(0);
+  }
+
+  12% {
+    transform: rotate(calc(var(--r) * .5));
+  }
+
+  100% {
+    transform: translateY(80vh) rotate(var(--r));
+    opacity: 0;
+  }
+}
+
+
+/* 10. PAGE 2 — FLYER MAP */
+
+#p2cross {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  overflow: hidden;
+}
+
+.flyer-map {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12vh 7vw 18vh;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7vw 5vw;
+  align-content: start;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+.spot {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  width: 72%;
+  justify-self: center;
+  cursor: crosshair;
+  transform-origin: center center;
+  translate: var(--sx, 0) var(--sy, 0);
+  --zoom: 1.75;
+  transition:
+    transform .45s cubic-bezier(.2, .8, .2, 1),
+    opacity .35s ease;
+}
+
+.spot img {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  filter:
+    grayscale(1)
+    saturate(0)
+    contrast(.95);
+
+  transition:
+    filter .45s ease,
+    transform .45s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+.spot.active {
+  z-index: 20;
+  transform:
+    translate(var(--tx, 0), var(--ty, 0))
+    scale(1.75);
+}
+
+.spot.active img {
+  filter:
+    grayscale(0)
+    saturate(1.45)
+    contrast(1.05);
+  transform: scale(1.02);
+}
+
+.spot .cap {
+  width: 100%;
+  min-height: 2.6em;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.spot.active .cap {
+  opacity: 1;
+}
+
+
+html body #p2cross .spot .cap {
+  font-size: calc(var(--type) / var(--zoom)) !important;
+}
+
+.spot .cap.typing::after {
+  content: "";
+  display: inline-block;
+  width: .55ch;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: -2px;
+  animation: blink .8s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.flyer-map.focus .spot:not(.active) {
+  opacity: .18;
+  pointer-events: none;
+}
+
+.map-note {
+  position: fixed;
+  left: min(8vw, 90px);
+  bottom: 5vh;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+#p2cross:has(.focus) .map-note {
+  opacity: 0;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+  .flyer-map {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7vw 4vw;
+  }
+
+  .spot {
+    width: 76%;
+    --zoom: 1.45;
+  }
+
+  .spot.active {
+    transform: scale(1.45);
+  }
+}
+
+@media (max-width: 650px) {
+
+  #p2cross .flyer-map {
+    padding:
+      max(80px, calc(env(safe-area-inset-top, 0px) + 70px))
+      18px
+      120px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-content: start;
+  }
+
+  #p2cross .spot {
+    translate: calc(var(--sx, 0) * .6) calc(var(--sy, 0) * .6);
+  }
+
+  #p2cross .spot.active {
+    transform: scale(1.3);
+  }
+
+  #p2cross .spot.active img {
+    transform: scale(1);
+  }
+
+  #p2cross .spot.active .cap {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  #p2cross .map-note {
+    display: none;
+  }
+}
+
+
+/*  11. PAGE 2 — DIAL  */
+
+#p2dial {
+  background: var(--mint);
+  color: var(--green);
+  overflow: hidden;
+}
+
+.dial-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(320px, 84vw);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.dial-screen {
+  min-height: 2.4em;
+  padding: 10px 0;
+  border-bottom: 1px solid currentColor;
+  letter-spacing: .12em;
+}
+
+.dial-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.dial-pad button {
+  padding: 16px 0;
+  border: 1px solid currentColor;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.dial-pad button:hover,
+.dial-pad button:active {
+  background: var(--green);
+  color: var(--mint);
+}
+
+.dial-pad .call {
+  grid-column: span 2;
+}
+
+.dial-msg {
+  min-height: 3em;
+  opacity: .85;
+}
+
+
+/* BIG TYPE */
+
+.bigtype {
+  position: absolute;
+  margin: 0;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  line-height: .82;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+html body #p2dial .bigtype-bold,
+html body #p2 .bigtype-light {
+  font-size: min(22vw, 30vh) !important;
+  line-height: .82;
+}
+
+html body #p2dial .bigtype-bold {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.1em;
+  font-weight: 400;
+  font-size: min(22vw, 27vh) !important;
+}
+
+html body #p2 .bigtype-light {
+  left: 3vw;
+  bottom: 2vh;
+  font-weight: 400;
+  font-size: min(26vw, 36vh) !important;
+  color: var(--blue);
+  opacity: 1;
+}
+
+
+html body #p2tabs .bigtype-light {
+  left: 50%;
+  top: 38.5%;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  font-weight: 400;
+  font-size: min(21vw, 38vh) !important;
+  color: var(--brown);
+  opacity: 1;
+}
+
+#p2tabs .tabs-field {
+  z-index: 1;
+}
+
+#p2dial .dial-wrap {
+  z-index: 2;
+}
+
+
+/* ----------------------------------------------------------
+   12. CURSOR + LEGACY CAMERA
+   ---------------------------------------------------------- */
+
+#cam {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s;
+  display: none !important;
+}
+
+#cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 130px;
+  margin: 0;
+  background: url("../photos/cursor.png") center / contain no-repeat;
+  border: none;
+  border-radius: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  transition: filter .15s ease;
+}
+
+.page:not(.on),
+.page:not(.on) * {
+  pointer-events: none !important;
+}
+
+
+/* 13. PAGE 7 — CAMERA  */
+
+#p7camera {
+  overflow: hidden;
+  background: var(--brown);
+  color: var(--pink);
+}
+
+#p7camera .camera-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--brown);
+  color: var(--pink);
+}
+
+
+#p7camera .camera-header {
+  position: absolute;
+  left: 7vw;
+  top: max(24px, calc(env(safe-area-inset-top, 0px) + 24px));
+  z-index: 100;
+}
+
+#p7camera .camera-title {
+  width: max-content;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  color: var(--pink);
+  font-size: 18px !important;
+  line-height: 1.2;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  word-break: keep-all;
+  text-align: left;
+}
+
+#p7camera .camera-sub {
+  width: max-content;
+  max-width: none;
+  margin: 4px 0 0;
+  padding: 0;
+  color: var(--pink);
+  opacity: .6;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Message */
+
+#p7camera .camera-form {
+  position: absolute;
+  left: 7vw;
+  top: max(100px, calc(env(safe-area-inset-top, 0px) + 100px));
+  z-index: 20;
+  width: min(260px, 32vw);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#p7camera .camera-form input,
+#p7camera .camera-form textarea {
+  width: 100%;
+  margin: 0;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(243, 201, 207, .65);
+  outline: none;
+  background: transparent;
+  color: var(--pink);
+  font: inherit;
+  text-align: left;
+  resize: none;
+}
+
+#p7camera .camera-form textarea {
+  min-height: 58px;
+}
+
+#p7camera .camera-form input::placeholder,
+#p7camera .camera-form textarea::placeholder {
+  color: var(--pink);
+  opacity: .55;
+}
+
+/* Camera */
+
+#captureVideo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(40vw, 760px);
+  max-height: 68vh;
+  transform: translate(-50%, -50%) scaleX(-1);
+
+  z-index: 1;
+  object-fit: cover;
+  background: #000;
+  border: 1px solid var(--pink);
+  filter: none;
+}
+
+#captureCanvas {
+  display: none;
+}
+
+#p7camera .camera-controls {
+  position: absolute;
+  left: 7vw;
+  bottom: max(9vh, 24px);
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#p7camera .camera-controls button {
+  padding: 8px 12px;
+  border: 1px solid var(--pink);
+  background: transparent;
+  color: var(--pink);
+  cursor: pointer;
+}
+
+#p7camera .camera-controls button:hover {
+  background: var(--pink);
+  color: var(--brown);
+}
+
+#p7camera .camera-status {
+  position: absolute;
+  right: 7vw;
+  bottom: max(9vh, 24px);
+  z-index: 20;
+  color: var(--pink);
+  opacity: .65;
+}
+
+#capturePreview {
+  position: absolute;
+  right: 7vw;
+  top: max(24px, calc(env(safe-area-inset-top, 0px) + 24px));
+  width: 120px;
+  max-height: 150px;
+  object-fit: cover;
+  border: 1px solid var(--pink);
+  opacity: 0;
+  filter: none;
+  z-index: 20;
+}
+
+#capturePreview.has-photo {
+  opacity: 1;
+}
+
+
+/* 14. PAGE 9 — PHOTO ARCHIVE */
+
+#p9archive {
+  overflow: hidden;
+  background: #fff;
+  color: var(--green);
+}
+
+#p9archive .archive-page {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+  color: var(--green);
+}
+
+#p9archive .archive-title {
+  position: absolute;
+  left: 7vw;
+  top: max(24px, calc(env(safe-area-inset-top, 0px) + 24px));
+  z-index: 5;
+}
+
+#p9archive .archive-grid {
+  position: absolute;
+  left: 7vw;
+  right: 7vw;
+  top: 18vh;
+  bottom: 13vh;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 28px);
+  overflow: visible;
+}
+
+#p9archive .archive-square {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+  filter: none;
+  padding: 0;
+  border: 0;
+  background: var(--green);
+  cursor: crosshair;
+  --zoom: 1.6;
+
+  transform-origin: center center;
+  transition:
+    transform .45s cubic-bezier(.2, .8, .2, 1),
+    filter .4s ease;
+}
+
+#p9archive .archive-square img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;
+  transform: scale(1);
+  transition: transform .5s ease;
+}
+
+#p9archive .archive-square.empty img {
+  display: none;
+}
+
+
+#p9archive .archive-square.active {
+  z-index: 20;
+  transform:
+    translate(var(--tx, 0px), var(--ty, 0px))
+    scale(var(--zoom));
+}
+
+#p9archive .archive-grid.focus .archive-square:not(.active) {
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+
+#p9archive .archive-square .cap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 22px 8px 8px;
+  background: linear-gradient(to top, rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
+
+  color: #fff;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+
+html body #p9archive .archive-square .cap {
+  font-size: calc(var(--type) / var(--zoom)) !important;
+}
+
+#p9archive .archive-square .cap.typing::after {
+  content: "";
+  display: inline-block;
+  width: .55ch;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: -2px;
+  animation: blink .8s steps(1) infinite;
+}
+
+#p9archive .archive-note {
+  position: absolute;
+  left: 7vw;
+  bottom: 5vh;
+  max-width: 70vw;
+  color: var(--green);
+  opacity: .7;
+  white-space: pre-wrap;
+}
+
+
+/* 15. RESPONSIVE */
+
+@media (max-width: 700px) {
+
+  #p2tabs .tab-note {
+    display: none;
+  }
+
+  #p2tabs .tabs-field {
+    left: 3vw;
+    right: 3vw;
+    gap: 2px;
+  }
+
+  #captureVideo {
+    left: 62%;
+    width: min(58vw, 720px);
+    max-width: 58vw;
+  }
+
+  #p7camera .camera-form {
+    width: min(240px, 55vw);
+  }
+
+  #capturePreview {
+    right: 6vw;
+    top: max(20px, calc(env(safe-area-inset-top, 0px) + 20px));
+    width: 80px;
+  }
+
+  #p9archive .archive-square {
+    --zoom: 2.2;
+  }
+
+  #p9archive .archive-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    left: 5vw;
+    right: 5vw;
+    top: 18vh;
+    bottom: 13vh;
+  }
+}
+
+@media (max-width: 650px) {
+
+  #p2cross .flyer-map {
+    overflow: auto;
+    padding: 70px 16px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-content: start;
+  }
+
+  #p2cross .spot {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    width: auto;
+    --zoom: 1; 
+  }
+
+  #p2cross .spot.active {
+    transform: none;
+  }
+
+  #p2cross .spot.active .cap {
+    width: auto;
+    margin-top: 8px;
+    transform: none;
+  }
+
+  #p2cross .map-note {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01s !important;
+    animation: none !important;
+  }
+}
+
+
+/*  16. PAGE 1 — POEMS */
+
+#p1 .poem-1 {
+  display: none;
+}
+
+#p1 .poem-1.on {
+  display: block;
+}
+
+#p1 .fill {
+  z-index: 5;
+  cursor: grab;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
+}
+
+#p1 .fill:active {
+  cursor: grabbing;
+}
+
+
+.page:has(.poem) {
+  background: var(--brown);
+  color: var(--pink);
+}
+
+body:has(.page.on .poem) #plus,
+body:has(.page.on .poem) .num.on {
+  color: var(--pink) !important;
+}
+
+
+/*  17. "+" COLOUR, RESET BUTTONS */
+
+#plus {
+  color: #111 !important;
+}
+
+body:has(#p2.on) #plus,
+body:has(#p7.on) #plus,
+body:has(#p7camera.on) #plus {
+  color: var(--pink) !important;
+}
+
+#messageReset {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  padding: 4px 0;
+  text-align: left;
+}
+
+#messageReset:hover {
+  text-decoration: underline;
+}
+
+#photoReset {
+  position: absolute;
+  right: 7vw;
+  top: max(24px, calc(env(safe-area-inset-top, 0px) + 24px));
+  z-index: 5;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--green);
+  font-family: inherit;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+#photoReset:hover,
+#photoReset:focus-visible {
+  background: var(--green);
+  color: #fff;
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  #photoReset {
+    right: 5vw;
+  }
+}
+
+body.snap,
+body.snap *,
+body.snap *::before,
+body.snap *::after {
+  transition: none !important;
+}
+
+body:not([data-v="page"]),
+body:not([data-v="page"]) *,
+body:not([data-v="page"]) *::before,
+body:not([data-v="page"]) *::after {
+  transition: none !important;
+}
+
+
+/* 18. FLYER TAB ADJUSTMENTS */
+
+
+#p2tabs .tabs-field::after {
+  content: "917 · HELP NEEDED";
+  position: absolute;
+  left: 50%;
+  top: -8vh;
+  transform: translate(-50%, -50%);
+  padding: 0 14px;
+  background: #f3c9cf;
+  color: #22110c;
+  font-size: 18px !important;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+html body #p2tabs .bigtype-light {
+  left: 48%;
+  top: 23%;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  font-size: min(22vw, 42vh) !important;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.8;
+  letter-spacing: -0.065em;
+  color: #000;
+  opacity: 1;
+  z-index: 0;
+}
+
+
+#p2tabs .tabs-field {
+  z-index: 1;
+}
+
+#p2tabs .tabs-field::before {
+  background: #f3c9cf;
+  border: 1px solid #22110c;
+  border-bottom: 1px solid #22110c;
+  z-index: 1;
+}
+
+#p2tabs .tabs-field .flyer-tab {
+  position: relative;
+  z-index: 2;
+  background: #f3c9cf;
+}
+
+@media (max-width: 700px) {
+
+  #p2tabs .tabs-field::after {
+    top: -8vh;
+    font-size: 13px !important;
+  }
+
+  html body #p2tabs .bigtype-light {
+    top: 29%;
+    font-size: min(27vw, 28vh) !important;
+  }
+}
+
+
+/* 19. CUSTOM CURSOR INTERACTION STATES */
+
+#cursor {
+  transform-origin: 18% 18%;
+  scale: 1;
+  filter: none;
+  transition:
+    filter .15s ease,
+    scale .18s ease,
+    opacity .2s ease;
+  will-change: transform, scale;
+}
+
+body.cursor-hover #cursor,
+body.cursor-grab #cursor,
+body.cursor-click #cursor {
+  filter: brightness(0) saturate(100%)
+          invert(19%) sepia(95%)
+          saturate(5000%)
+          hue-rotate(355deg)
+          brightness(90%)
+          contrast(110%);
+}
+
+body.cursor-hover #cursor,
+body.cursor-grab #cursor {
+  scale: 1.06;
+}
+
+body.cursor-click #cursor {
+  animation: paper-cursor-bounce .34s ease-out;
+}
+
+@keyframes paper-cursor-bounce {
+  0%   { scale: 1; }
+  32%  { scale: .82; }
+  62%  { scale: 1.12; }
+  82%  { scale: .96; }
+  100% { scale: 1; }
+}
+
+body.cursor-grab #p1 .fill,
+body.cursor-grab #p7 .drag-img {
+  cursor: grabbing;
+}
+
+
+html,
+body,
+body *,
+body *::before,
+body *::after {
+  cursor: none !important;
+}

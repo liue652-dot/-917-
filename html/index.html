@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <title>(917)</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/die8dnc.css" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    #p1 .poem-image {
+      display: none;
+    }
+
+    #p1 .poem-image.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body data-v="intro">
+
+  <button id="plus" aria-label="Menu">+</button>
+
+
+  <!-- INTRO-->
+
+  <section id="intro">
+
+    <div id="hint"></div>
+
+    <div id="grid" aria-hidden="true"></div>
+
+    <div id="row"></div>
+
+  </section>
+
+
+  <!-- NAVIGATION  -->
+
+  <div id="nums"></div>
+
+  <video
+    id="walk"
+    muted
+    playsinline
+    poster="../photos/flyer.png"
+  ></video>
+
+  <div id="hoverbox"></div>
+
+  <img id="hoverimg" alt="" />
+
+  <video
+    id="hover9"
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    src="../photos/video.mp4"
+  ></video>
+
+  <audio id="talk" loop src="../talking.mp3"></audio>
+
+  <div id="cursor"></div>
+
+
+  <!-- CAMERA -->
+
+  <div id="cam">
+    <video id="camv" muted playsinline></video>
+
+    <button id="camBtn">Turn on camera</button>
+
+    <p></p>
+  </div>
+
+
+  <!-- PAGE 1 — FOUR POEMS -->
+
+  <section
+    class="page"
+    id="p1"
+    data-n="1"
+    data-kind="comments"
+  >
+
+    <img
+      class="fill poem-image poem-image-0"
+      data-variant="0"
+      src="../photos/flyer20.png"
+      alt="Image for To A Woman Passing By"
+    />
+
+    <img
+      class="fill poem-image poem-image-1"
+      data-variant="1"
+      src="../photos/flyer9.png"
+      alt="Image for Harlem"
+    />
+
+    <img
+      class="fill poem-image poem-image-2"
+      data-variant="2"
+      src="../photos/flyer15.png"
+      alt="Image for The Day Lady Died"
+    />
+
+    <img
+      class="fill poem-image poem-image-3"
+      data-variant="3"
+      src="../photos/flyer26.png"
+      alt="Image for Borges and I"
+    />
+
+
+    <div class="poem poem-1" data-variant="0">
+
+      <strong>To A Woman Passing By</strong>
+
+      By Charles Baudelaire<br />
+      Around me roared the nearly deafening street.
+      Tall, slim, in mourning, in majestic grief,
+      A woman passed me, with a splendid hand
+      Lifting and swinging her festoon and hem;<br />
+      Nimble and stately, statuesque of leg.
+      I, shaking like an addict, from her eye,
+      Black sky, spawner of hurricanes, drank in
+      Sweetness that fascinates, pleasure that kills.<br />
+      One lightning flash... then night! Sweet fugitive
+      Whose glance has made me suddenly reborn,
+      Will we not meet again this side of death?<br />
+      Far from this place! too late! never perhaps!
+      Neither one knowing where the other goes,
+      O you I might have loved, as well you know!
+
+    </div>
+
+
+    <div class="poem poem-1" data-variant="1">
+
+      <strong>Harlem</strong>
+
+      By Langston Hughes<br />
+
+      What happens to a dream deferred?<br />
+          Does it dry up
+          like a raisin in the sun?
+          Or fester like a sore—
+          And then run?
+          Does it stink like rotten meat?
+          Or crust and sugar over—
+          like a syrupy sweet?<br />
+          Maybe it just sags
+          like a heavy load.
+          Or does it explode?
+    </div>
+
+
+    <div class="poem poem-1" data-variant="2">
+
+      <strong>The Day Lady Died</strong>
+      By Frank O’Hara<br />
+      It is 12:20 in New York a Friday
+      three days after Bastille day, yes
+      it is 1959 and I go get a shoeshine
+      because I will get off the 4:19 in Easthampton
+      at 7:15 and then go straight to dinner
+      and I don’t know the people who will feed me<br />
+      I walk up the muggy street beginning to sun
+      and have a hamburger and a malted and buy
+      an ugly NEW WORLD WRITING to see what the poets
+      in Ghana are doing these days
+                           I go on to the bank
+      and Miss Stillwagon (first name Linda I once heard)
+      doesn’t even look up my balance for once in her life
+      and in the GOLDEN GRIFFIN I get a little Verlaine
+      for Patsy with drawings by Bonnard although I do
+      think of Hesiod, trans. Richmond Lattimore or
+      Brendan Behan’s new play or Le Balcon or Les Nègres
+      of Genet, but I don’t, I stick with Verlaine
+      after practically going to sleep with quandariness<br />
+      and for Mike I just stroll into the PARK LANE
+      Liquor Store and ask for a bottle of Strega and
+      then I go back where I came from to 6th Avenue
+      and the tobacconist in the Ziegfeld Theatre and
+      casually ask for a carton of Gauloises and a carton
+      of Picayunes, and a NEW YORK POST with her face on it<br />
+      and I am sweating a lot by now and thinking of
+      leaning on the john door in the 5 SPOT
+      while she whispered a song along the keyboard
+      To Mal Waldron and everyone and I stopped breathing
+    </div>
+
+
+    <div class="poem poem-1" data-variant="3">
+
+      <strong>Borges and I</strong>
+      By Jorge Luis Borges<br />
+      The other one, Borges, is the one to whom things happen.<br />
+      I wander through Buenos Aires, and pause, perhaps mechanically nowadays, to gaze at an entrance archway and its metal gate; I hear about Borges via the mail, and read his name on a list of professors or in some biographical dictionary.<br />
+      I enjoy hourglasses, maps, eighteenth century typography, etymology, the savor of coffee and Stevenson’s prose: the other shares my preferences but in a vain way that transforms them to an actor’s props.<br />
+      It would be an exaggeration to say that our relationship is hostile; I live, I keep on living, so that Borges can weave his literature, and that literature justifies me. It’s no pain to confess that certain of his pages are valid, but those pages can’t save me, perhaps because good writing belongs to no one, not even the other, but only to language and tradition.<br />
+      For the rest, I am destined to vanish, definitively, and only some aspect of me can survive in the other. Little by little, I will yield all to him, even though his perverse habit of falsifying and exaggerating is clear to me.<br />
+      Spinoza understood that all things want to go on being themselves; the stone eternally wishes to be stone, and the tiger a tiger. I am forced to survive as Borges, not myself (if I am a self), yet I recognize myself less in his books than in many others, less too than in the studious strumming of a guitar.<br />
+      Years ago I tried to free myself from him, and passed from suburban mythologies to games of time and infinity, but now those are Borges’ games and I will have to think of something new. Thus my life is a flight and I will lose all and all will belong to oblivion, or to that other.<br />
+      I do not know which of us is writing this page.
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 2 — COMMENTS -->
+
+  <section
+    class="page"
+    id="p2"
+    data-n="2"
+    data-kind="comments"
+  >
+
+    <div class="bigtype bigtype-light" aria-hidden="true">Contact</div>
+
+    <div class="poem" id="poem2"></div>
+
+  </section>
+
+
+  <!-- PAGE 2 — FLYER TABS -->
+
+  <section
+    class="page"
+    id="p2tabs"
+    data-n="2"
+    data-kind="tabs"
+  >
+
+    <div class="bigtype bigtype-light" aria-hidden="true">STRANGER</div>
+
+    <div class="tabs-field" id="tabsField"></div>
+
+    <div class="cities" id="cities">
+
+      <article class="city">
+        <h2 class="city-label">TRADING CITIES • 2</h2>
+        <div class="city-text">
+          <p>In Chloe, a great city, the people who move through the streets are all strangers. At each encounter, they imagine a thousand things about one another; meetings which could take place between them, conversations, surprises, caresses, bites. But no one greets anyone; eyes lock for a second, then dart away, seeking other eyes,never stopping.<br />
+            A girl comes along, twirling a parasol on her shoulder, and twirling slightly also her rounded hips. A woman in black comes along, showing her full age, her eyes restless beneath her veil, her lips trembling. A tattooed giant comes along; a young man with white hair; a female dwarf; two girls, twins, dressed in coral. Something runs among them, an exchange of glances like lines that connect one figure with another and draw arrows, stars, triangles, until all combinations are used up in a moment, and other characters come on to the scene: a blind man with a cheetah on a leash, a courtesan with an ostrich-plume fan, an ephebe, a Fat Woman. And thus, when some people happen to find themselves together, taking shelter from the rain under an arcade, or crowding beneath an awning of the bazaar, or stopping to listen to the band in the square, meetings, seductions, copulations, orgies are consummated among them without a word exchanged, without a finger touching anything, almost without an eye raised.  <br />
+            A voluptuous vibration constantly stirs Chloe, the most chaste of cities. If men and women began to live their ephemeral dreams, every phantom would become a person with whom to begin a story of pursuits, pretenses, misunderstandings, clashes, oppressions, and the carousel of fantasies would stop.</p>
+        </div>
+      </article>
+
+      <article class="city">
+        <h2 class="city-label">TRADING CITIES • 4</h2>
+        <div class="city-text">
+          <p>[In Ersilia, to establish the relationships that sustain the city’s life, the inhabitants stretch strings from the corners of the houses, white or black or gray or black-and-white according to whether they mark a relationship of blood, of trade, authority, agency. When the strings become so numerous that you can no longer pass among them, the inhabitants leave: the houses are dismantled; only the strings and their supports remain. <br />
+            From a mountainside, camping with their household goods, Ersilia’s refugees look at the labyrinth of taut strings and poles that rise in the plain. That is the city of Ersilia still, and they are nothing. They rebuild Ersilia elsewhere. They weave a similar pattern of strings which they would like to be more complex and at the same time more regular than the other. Then they abandon it and take themselves and their houses still farther away.  <br />
+            Thus, when traveling in the territory of Ersilia, you come upon the ruins of the abandoned cities, without the walls which do not last, without the bones of the dead which the wind rolls away: spider-webs of intricate relationships seeking a form.</p>
+        </div>
+      </article>
+
+      <article class="city">
+        <h2 class="city-label">TRADING CITIES • 5</h2>
+        <div class="city-text">
+          <p>In Esmeralda, city of water, a network of canals and a network of streets span and intersect each other. To go from one place to another you have always the choice between land and boat: and since the shortest distance between two points in Esmeralda is not a straight line but a zigzag that ramifies in tortuous optional routes, the ways that open to each passer-by are never two, but many, and they increase further for those who alternate a stretch by boat with one on dry land. And so Esmeralda’s inhabitants are spared the boredom of following the same streets every day. And that is not all: the network of routes is not arranged on one level, but follows instead an up-and-down course of steps, landings, cambered bridges, hanging streets. Combining segments of the various routes, elevated or on ground level, each inhabitant can enjoy every day the pleasure of a new itinerary to reach the same places. The most fixed and calm lives in Esmeralda are spent without any repetition. <br />
+            Secret and adventurous lives, here as elsewhere, are subject to greater restrictions. Esmeralda’s cats, thieves, illicit lovers move along higher, discontinuous ways, dropping from a rooftop to a balcony, following gutterings with acrobats’ steps. Below, the rats run in the darkness of the sewers, one behind the other’s tail, along with conspirators and smugglers: they peep out of manholes and drainpipes, they slip through double bottoms and ditches, from one hiding place to another they drag crusts of cheese, contraband goods, kegs of gunpowder, crossing the city’s compactness pierced by the spokes of underground passages. <br />
+            A map of Esmeralda should include, marked in different colored inks, all these routes, solid and liquid, evident and hidden. It is more difficult to fix on the map the routes of the swallows, who cut the air over the roofs, dropping long invisible parabolas with their still wings, darting to gulp a mosquito, spiraling upward, grazing a pinnacle, dominating from every point of their airy paths all the points of the city.</p>
+        </div>
+      </article>
+
+      <button class="cities-again" id="citiesAgain" type="button">
+        Put the tabs back
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 2 — FLYER MAP -->
+
+  <section
+    class="page"
+    id="p2cross"
+    data-n="2"
+    data-kind="cross"
+  >
+
+    <div class="flyer-map" id="flyerMap">
+
+      <div class="spot" data-place="Bushwick, Manhattan" style="left: 52%; top: 4%">
+        <img src="../photos/1.jpg" alt="Bushwick, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Nolita, Manhattan" style="left: 29%; top: 26%">
+        <img src="../photos/5.jpg" alt="Nolita, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Bushwick, Brooklyn" style="left: 75%; top: 22%">
+        <img src="../photos/2.jpg" alt="Bushwick, Brooklyn" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 6%; top: 38%">
+        <img src="../photos/6.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 75%; top: 48%">
+        <img src="../photos/7.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Soho, Manhattan" style="left: 6%; top: 62%">
+        <img src="../photos/8.jpg" alt="Soho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Bushwick, Brooklyn" style="left: 29%; top: 52%">
+        <img src="../photos/3.jpg" alt="Bushwick, Brooklyn" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Noho, Manhattan" style="left: 52%; top: 50%">
+        <img src="../photos/9.jpg" alt="Noho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Bushwick, Brooklyn" style="left: 29%; top: 76%">
+        <img src="../photos/4.jpg" alt="Bushwick, Brooklyn" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Nolita, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/10.jpg" alt="Nolita, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Soho, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/11.jpg" alt="Soho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Lower East Side, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/12.jpg" alt="Lower East Side, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="East Village, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/13.jpg" alt="East Village, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Union Square, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/14.jpg" alt="Union Square, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Soho, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/15.jpg" alt="Soho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Lower East Side, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/16.jpg" alt="Lower East Side, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/30.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="East Village, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/17.jpg" alt="East Village, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/18.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Soho, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/19.jpg" alt="Soho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Union Square, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/20.jpg" alt="Union Square, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/29.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="West Village, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/21.jpg" alt="West Village, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Soho, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/22.jpg" alt="Soho, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/23.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Lower East Side, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/24.jpg" alt="Lower East Side, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/32.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Lower East Side, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/25.jpg" alt="Lower East Side, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/26.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/27.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="Chinatown, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/31.jpg" alt="Chinatown, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="East Village, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/33.jpg" alt="East Village, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+      <div class="spot" data-place="East Village, Manhattan" style="left: 52%; top: 76%">
+        <img src="../photos/34.jpg" alt="East Village, Manhattan" />
+        <div class="cap"></div>
+      </div>
+
+    </div>
+
+    <div class="map-note" id="mapNote">
+      Where flyers are found. Hover a photo.
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 2 — DIAL -->
+
+  <section
+    class="page"
+    id="p2dial"
+    data-n="2"
+    data-kind="dial"
+  >
+
+    <div class="bigtype bigtype-bold" aria-hidden="true">PASSING</div>
+
+    <div class="dial-wrap">
+
+      <div class="dial-screen" id="dialScreen">
+        +1 (917)
+      </div>
+
+      <div class="dial-pad" id="dialPad"></div>
+
+      <div class="dial-msg" id="dialMsg">
+        Call the number on the tab.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 9 — RED VIDEO -->
+
+  <section
+    class="page"
+    id="p9"
+    data-n="9"
+  >
+
+    <div id="bg9">
+      <video
+        id="vid"
+        playsinline
+        loop
+        src="../photos/video.mp4"
+      ></video>
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 7 — MESSAGE / COLLAGE  -->
+
+  <section
+    class="page"
+    id="p7"
+    data-n="7"
+  >
+
+    <div class="message-layer">
+
+      <div class="message-box">
+
+        <textarea
+          id="messageInput"
+          placeholder="leave a message"
+        ></textarea>
+
+        <button id="messageSend" type="button">
+          send
+        </button>
+
+        <button id="messageReset" type="button">
+          Reset
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="saved-note" id="savedNote"></div>
+
+    <div class="collage" id="collage">
+
+      <img class="drag-img" src="../photos/flyer1.png" alt="" draggable="false" style="left: 3%; top: 10%" />
+      <img class="drag-img" src="../photos/flyer10.png" alt="" draggable="false" style="left: 32%; top: 6%" />
+      <img class="drag-img" src="../photos/flyer3.png" alt="" draggable="false" style="left: 60%; top: 12%" />
+      <img class="drag-img" src="../photos/flyer4.png" alt="" draggable="false" style="left: 8%; top: 44%" />
+      <img class="drag-img" src="../photos/flyer5.png" alt="" draggable="false" style="left: 38%; top: 40%" />
+      <img class="drag-img" src="../photos/flyer6.png" alt="" draggable="false" style="left: 64%; top: 46%" />
+      <img class="drag-img" src="../photos/flyer7.png" alt="" draggable="false" style="left: 14%; top: 70%" />
+      <img class="drag-img" src="../photos/flyer8.png" alt="" draggable="false" style="left: 52%; top: 72%" />
+      <img class="drag-img" src="../photos/flyer9.png" alt="" draggable="false" style="left: 76%; top: 30%" />
+      <img class="drag-img" src="../photos/flyer24.png" alt="" draggable="false" style="left: 24%; top: 22%" />
+      <img class="drag-img" src="../photos/flyer2.png" alt="" draggable="false" style="left: 30%; top: 58%" />
+      <img class="drag-img" src="../photos/flyer12.png" alt="" draggable="false" style="left: 78%; top: 66%" />
+
+    </div>
+
+    <div class="poem" id="poem7"></div>
+
+  </section>
+
+
+  <!-- PAGE 7 — CAMERA -->
+
+  <section
+    class="page"
+    id="p7camera"
+    data-n="7"
+    data-kind="camera"
+  >
+
+    <div class="camera-page">
+
+      <div class="camera-header">
+
+        <div class="camera-title">
+          TAKE A PHOTO
+        </div>
+
+        <div class="camera-sub">
+          Where are you from and what is your request?
+        </div>
+
+      </div>
+
+      <div class="camera-form">
+        <textarea
+          id="photoMessage"
+          maxlength="240"
+          placeholder="Type your message"
+        ></textarea>
+      </div>
+
+      <video
+        id="captureVideo"
+        autoplay
+        muted
+        playsinline
+      ></video>
+
+      <canvas id="captureCanvas"></canvas>
+
+      <div class="camera-controls">
+
+        <button id="cameraStart" type="button">
+          TURN ON CAMERA
+        </button>
+
+        <button id="cameraCapture" type="button">
+          TAKE PHOTO
+        </button>
+
+      </div>
+
+      <div id="cameraStatus" class="camera-status">
+        CAMERA OFF
+      </div>
+
+      <img id="capturePreview" alt="Captured photograph" />
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 9 — PHOTO ARCHIVE -->
+
+  <section
+    class="page"
+    id="p9archive"
+    data-n="9"
+    data-kind="archive"
+  >
+
+    <div class="archive-page">
+
+      <div class="archive-title">
+        PHOTO ARCHIVE
+      </div>
+
+      <button id="photoReset" type="button">
+        RESET PHOTOS
+      </button>
+
+      <div class="archive-grid" id="archiveGrid"></div>
+
+      <div class="archive-note" id="archiveNote"></div>
+
+    </div>
+
+  </section>
+
+  <script src="../js/script.js"></script>
+
+
+
+  <script>
+    (function () {
+
+      const page = document.getElementById("p1");
+
+      if (!page) return;
+
+      function syncPoemImage() {
+
+        const activePoem = page.querySelector(".poem-1.on");
+
+        const variant = activePoem ? activePoem.dataset.variant : "0";
+
+        page.querySelectorAll(".poem-image").forEach(function (img) {
+          img.classList.toggle("active", img.dataset.variant === variant);
+        });
+
+      }
+
+      const observer = new MutationObserver(syncPoemImage);
+
+      page.querySelectorAll(".poem-1").forEach(function (poem) {
+        observer.observe(poem, {
+          attributes: true,
+          attributeFilter: ["class"]
+        });
+      });
+
+      syncPoemImage();
+
+    })();
+  </script>
+
+</body>
+
+</html>
